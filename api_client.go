@@ -57,23 +57,26 @@ func NewApiClient(region string, locale string) (*ApiClient, error) {
 	return nil, errors.New(fmt.Sprintf("Locale '%s' is not valid for region '%s'", locale, region))
 }
 
-func (a *ApiClient) GetAchievement(id int) *Achievement {
-	jsonBlob := a.get(fmt.Sprintf("achievement/%d", id))
-	achieve := &Achievement{}
-	err := json.Unmarshal(jsonBlob, achieve)
+func (a *ApiClient) GetAchievement(id int) (*Achievement, error) {
+	jsonBlob, err := a.get(fmt.Sprintf("achievement/%d", id))
 	if err != nil {
-		handleError(err)
+		return nil, err
 	}
-	return achieve
+	achieve := &Achievement{}
+	err = json.Unmarshal(jsonBlob, achieve)
+	if err != nil {
+		return nil, err
+	}
+	return achieve, nil
 }
 
-func (a *ApiClient) get(path string) []byte {
+func (a *ApiClient) get(path string) ([]byte, error) {
 	url := a.url(path)
 	client := &http.Client{}
 
 	request, err := http.NewRequest("GET", url.String(), nil)
 	if err != nil {
-		handleError(err)
+		return make([]byte, 0), err
 	}
 
 	if len(a.Secret) > 0 {
@@ -82,16 +85,16 @@ func (a *ApiClient) get(path string) []byte {
 
 	response, err := client.Do(request)
 	if err != nil {
-		handleError(err)
+		return make([]byte, 0), err
 	}
 	defer response.Body.Close()
 
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		handleError(err)
+		return make([]byte, 0), err
 	}
 	
-	return body
+	return body, nil
 }
 
 func (a *ApiClient) url(path string) *url.URL {
