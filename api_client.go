@@ -12,6 +12,7 @@ import (
 	"crypto/sha1"
 	"encoding/json"
 	"io/ioutil"
+	"strconv"
 )
 
 type ApiClient struct {
@@ -80,11 +81,66 @@ func (a *ApiClient) GetAuctionData(realm string) (*AuctionData, error) {
 	if err != nil {
 		return nil, err
 	}
-	return auctionData, nil	
+	return auctionData, nil
 }
 
+func (a *ApiClient) GetBattlePetAbility(id int) (*BattlePetAbility, error) {
+	jsonBlob, err := a.get(fmt.Sprintf("battlePet/ability/%d", id))
+	if err != nil {
+		return nil, err
+	}
+	ability := &BattlePetAbility{}
+	err = json.Unmarshal(jsonBlob, ability)
+	if err != nil {
+		return nil, err
+	}
+	return ability, nil
+}
+
+func (a *ApiClient) GetBattlePetSpecies(id int) (*BattlePetSpecies, error) {
+	jsonBlob, err := a.get(fmt.Sprintf("battlePet/species/%d", id))
+	if err != nil {
+		return nil, err
+	}
+	species := &BattlePetSpecies{}
+	err = json.Unmarshal(jsonBlob, species)
+	if err != nil {
+		return nil, err
+	}
+	return species, nil
+}
+
+func (a *ApiClient) GetBattlePet(id int, level int, breedId int, qualityId int) (*BattlePet, error) {
+	jsonBlob, err := a.getWithParams(
+		fmt.Sprintf("battlePet/stats/%d", id), 
+		map[string]string{
+			"level": strconv.Itoa(level),
+			"breedId": strconv.Itoa(breedId),
+			"qualityId": strconv.Itoa(qualityId),
+		})
+	if err != nil {
+		return nil, err
+	}
+
+	pet := &BattlePet{}
+	err = json.Unmarshal(jsonBlob, pet)
+	if err != nil {
+		return nil, err
+	}
+	return pet, nil	
+}
+
+func (a *ApiClient) GetBattlePetStats(id int, level int, breedId int, qualityId int) (*BattlePet, error) {
+	return a.GetBattlePet(id, level, breedId, qualityId)
+}
+
+
 func (a *ApiClient) get(path string) ([]byte, error) {
-	url := a.url(path)
+	return a.getWithParams(path, make(map[string]string))
+}
+
+func (a *ApiClient) getWithParams(path string, queryParams map[string]string) ([]byte, error) {
+	url := a.url(path, queryParams)
 	client := &http.Client{}
 
 	request, err := http.NewRequest("GET", url.String(), nil)
@@ -110,12 +166,17 @@ func (a *ApiClient) get(path string) ([]byte, error) {
 	return body, nil
 }
 
-func (a *ApiClient) url(path string) *url.URL {
+func (a *ApiClient) url(path string, queryParamPairs map[string]string) *url.URL {
+	queryParamPairs["locale"] = a.Locale
+	queryParamList := make([]string, 0)
+	for k, v := range queryParamPairs {
+		queryParamList = append(queryParamList, k + "=" + v)
+	}
 	return &url.URL{
 		Scheme: "http",
 		Host: a.Host,
 		Path: "/api/wow/" + path,
-		RawQuery: "locale=" + a.Locale,
+		RawQuery: strings.Join(queryParamList, "&"),
 	}
 }
 
@@ -124,7 +185,7 @@ func (a *ApiClient) authorizationString(signature string) string {
 }
 
 func (a *ApiClient) signature(verb string, path string) string {
-	url := a.url(path)
+	url := a.url(path, make(map[string]string))
 	toBeSigned := []byte(strings.Join([]string{verb, time.Now().String(), url.Path, ""}, "\n"))
 	mac := hmac.New(sha1.New, []byte(a.Secret))
 	_, err := mac.Write(toBeSigned) // FIXME _ = signed
