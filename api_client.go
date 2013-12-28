@@ -70,6 +70,19 @@ func (a *ApiClient) GetAchievement(id int) (*Achievement, error) {
 	return achieve, nil
 }
 
+func (a *ApiClient) GetAuctionData(realm string) (*AuctionData, error) {
+	jsonBlob, err := a.get(fmt.Sprintf("auction/data/%s", realm))
+	if err != nil {
+		return nil, err
+	}
+	auctionData := &AuctionData{}
+	err = json.Unmarshal(jsonBlob, auctionData)
+	if err != nil {
+		return nil, err
+	}
+	return auctionData, nil	
+}
+
 func (a *ApiClient) get(path string) ([]byte, error) {
 	url := a.url(path)
 	client := &http.Client{}
