@@ -8,5 +8,5 @@ type FeedEntry struct {
 	Criteria *AchievementCriteria
 	Quantity int
 	Name string
-	itemId int
+	ItemId int
 }
