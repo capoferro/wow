@@ -134,6 +134,81 @@ func (a *ApiClient) GetBattlePetStats(id int, level int, breedId int, qualityId 
 	return a.GetBattlePet(id, level, breedId, qualityId)
 }
 
+// Will return region challenges if realm is empty string.
+func (a *ApiClient) GetChallenges(realm string) ([]*Challenge, error) {
+	if realm == "" {
+		realm = "region"
+	}
+	jsonBlob, err := a.get(fmt.Sprintf("challenge/%s", realm))
+	if err != nil {
+		return nil, err
+	}
+	challengeSet := &challengeSet{}
+	err = json.Unmarshal(jsonBlob, challengeSet)
+	if err != nil {
+		return nil, err
+	}
+	return challengeSet.Challenges, nil
+}
+
+func (a *ApiClient) GetChallenge(realm string) ([]*Challenge, error) {
+	return a.GetChallenges(realm)
+}
+
+func (a *ApiClient) GetCharacter(realm string, characterName string) (*Character, error) {
+	return a.GetCharacterWithFields(realm, characterName, make([]string, 0))
+}
+
+func (a *ApiClient) GetCharacterWithFields(realm string, characterName string, fields []string) (*Character, error) {
+	err := validateCharacterFields(fields)
+	if err != nil {
+		return nil, err
+	}
+	jsonBlob, err := a.getWithParams(fmt.Sprintf("character/%s/%s", realm, characterName), map[string]string{"fields": strings.Join(fields, ",")})
+	if err != nil {
+		return nil, err
+	}
+	char := &Character{}
+	err = json.Unmarshal(jsonBlob, char)
+	if err != nil {
+		return nil, err
+	}
+	return char, nil	
+}
+
+func validateCharacterFields(fields []string) error {
+	badFields := make([]string, 0)
+	for _, field := range fields {
+		switch field {
+			case "achievements",
+			"appearance",
+			"feed",
+			"guild",
+			"hunterPets",
+			"items",
+			"mounts",
+			"pets",
+			"petSlots",
+			"professions",
+			"progression",
+			"pvp",
+			"quests",
+			"reputation",
+			"stats",
+			"talents",
+			"titles":
+			// valid, noop
+		default:
+			badFields = append(badFields, field)
+		}
+	}
+	if len(badFields) != 0 {
+		return errors.New(fmt.Sprintf("The following fields are not valid: %v", badFields))
+	} else {
+		return nil
+	}
+
+}
 
 func (a *ApiClient) get(path string) ([]byte, error) {
 	return a.getWithParams(path, make(map[string]string))

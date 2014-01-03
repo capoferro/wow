@@ -5,5 +5,9 @@ type Item struct {
 	Id int
 	Name string
 	Quality int
-//	TooltipParams TODO
+	ItemLevel int
+	TooltipParams *TooltipParams
+	Stats []*Stat
+	Armor int
+	WeaponInfo *WeaponInfo
 }
