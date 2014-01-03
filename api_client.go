@@ -181,6 +181,19 @@ func (a *ApiClient) GetCharacterWithFields(realm string, characterName string, f
 	return char, nil	
 }
 
+func (a *ApiClient) GetItem(id int) (*Item, error) {
+	jsonBlob, err := a.get(fmt.Sprintf("item/%d", id))
+	if err != nil {
+		return nil, err
+	}
+	item, err := NewItemFromJson(jsonBlob)
+	if err != nil {
+		return nil, err
+	}
+	
+	return item, err
+}
+
 func validateCharacterFields(fields []string) error {
 	badFields := make([]string, 0)
 	for _, field := range fields {

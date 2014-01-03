@@ -151,5 +151,16 @@ func (s *ApiClientSuite) Test_GetCharacterWithFields(c *C) {
 	c.Assert(a.Class, Equals, 6)
 	c.Assert(a.Race, Equals, 2)
 	c.Assert(a.Gender, Equals, 0)
+	c.Assert(len(a.Items.Head.Stats), Equals, 5)
+}
+
+func (s *ApiClientSuite) Test_GetItem(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, _ := client.GetItem(18803)
+
+	c.Assert(a.Armor, Equals, 0)
+	c.Assert(a.BaseArmor, Equals, 0)
+	c.Assert(len(a.Stats), Equals, 4)
 }
 
