@@ -14,7 +14,7 @@ type Character struct {
 	LastModified uint
 	Guild *Guild
 	Feed []*FeedEntry
-	Items *ItemSet
+	Items *ItemList
 	Stats *CharacterStats
 	Professions *ProfessionList
 	Reputation []*Reputation

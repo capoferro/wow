@@ -164,3 +164,11 @@ func (s *ApiClientSuite) Test_GetItem(c *C) {
 	c.Assert(len(a.Stats), Equals, 4)
 }
 
+func (s *ApiClientSuite) Test_GetItemSet(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, _ := client.GetItemSet(1060)
+
+	c.Assert(len(a.Items), Equals, 5)
+	c.Assert(len(a.SetBonuses), Equals, 2)
+}

@@ -194,6 +194,20 @@ func (a *ApiClient) GetItem(id int) (*Item, error) {
 	return item, err
 }
 
+func (a *ApiClient) GetItemSet(id int) (*ItemSet, error) {
+	jsonBlob, err := a.get(fmt.Sprintf("item/set/%d", id))
+	if err != nil {
+		return nil, err
+	}
+	itemSet := &ItemSet{}
+	err = json.Unmarshal(jsonBlob, itemSet)
+	if err != nil {
+		return nil, err
+	}
+	
+	return itemSet, err
+}
+
 func validateCharacterFields(fields []string) error {
 	badFields := make([]string, 0)
 	for _, field := range fields {
