@@ -22,8 +22,8 @@ type ApiClient struct {
 	PublicKey string
 }
 
-// NewApiClient accepts regions (US, EU, KR, TW, ZH) and their
-// associated locales and returns a new instance of ApiClient. If the
+// NewApiClient accepts a region (US, EU, KR, TW, ZH) and an optional
+// associated locale to return a new instance of ApiClient. If the
 // locale is an empty string, the default locale for that region will
 // be used.
 func NewApiClient(region string, locale string) (*ApiClient, error) {
