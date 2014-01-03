@@ -9,9 +9,9 @@ type Pet struct {
 	Stats *PetStats
 	BattlePetGuid string
 	IsFavorite bool
-	isFirstAbilitySlotSelected bool
-	isSecondAbilitySlotSelected bool
-	isThirdAbilitySlotSelected bool
-	creatureName string
-	canBattle bool
+	IsFirstAbilitySlotSelected bool
+	IsSecondAbilitySlotSelected bool
+	IsThirdAbilitySlotSelected bool
+	CreatureName string
+	CanBattle bool
 }
