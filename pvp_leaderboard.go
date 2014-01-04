@@ -1,5 +1,5 @@
 package wow
 
-type PvPLeaderboard struct {
+type pvpLeaderboard struct {
 	Rows []*PvPLeaderboardRow
 }

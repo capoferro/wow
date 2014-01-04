@@ -1,5 +1,5 @@
 package wow
 
-type ClassList struct {
+type classList struct {
 	Classes []*Class
 }

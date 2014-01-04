@@ -1,5 +1,5 @@
 package wow
 
-type BattlegroupList struct {
+type battlegroupList struct {
 	Battlegroups []*Battlegroup
 }

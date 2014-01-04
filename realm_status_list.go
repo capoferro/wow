@@ -1,5 +1,5 @@
 package wow
 
-type RealmStatusList struct {
+type realmStatusList struct {
 	Realms []*RealmStatus
 }

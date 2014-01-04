@@ -1,5 +1,5 @@
 package wow
 
-type RaceList struct {
+type raceList struct {
 	Races []*Race
 }

@@ -148,7 +148,7 @@ func (a *ApiClient) GetChallenges(realm string) ([]*Challenge, error) {
 	if err != nil {
 		return nil, err
 	}
-	challengeSet := &ChallengeSet{}
+	challengeSet := &challengeList{}
 	err = json.Unmarshal(jsonBlob, challengeSet)
 	if err != nil {
 		return nil, err
@@ -232,7 +232,7 @@ func (a *ApiClient) GetGuildWithFields(realm string, guildName string, fields []
 func (a *ApiClient) GetPvPLeaderboard(bracket string) ([]*PvPLeaderboardRow, error) {
 	jsonBlob, err := a.get(fmt.Sprintf("leaderboard/%s", bracket))
 
-	leaderboard := &PvPLeaderboard{}
+	leaderboard := &pvpLeaderboard{}
 	err = json.Unmarshal(jsonBlob, leaderboard)
 	if err != nil {
 		return nil, err
@@ -254,7 +254,7 @@ func (a *ApiClient) GetQuest(id int) (*Quest, error) {
 func (a *ApiClient) GetRealmStatus() ([]*RealmStatus, error) {
 	jsonBlob, err := a.get("realm/status")
 
-	list := &RealmStatusList{}
+	list := &realmStatusList{}
 	err = json.Unmarshal(jsonBlob, list)
 	if err != nil {
 		return nil, err
@@ -287,7 +287,7 @@ func (a *ApiClient) GetSpell(id int) (*Spell, error) {
 func (a *ApiClient) GetBattlegroups() ([]*Battlegroup, error) {
 	jsonBlob, err := a.get("data/battlegroups/")
 
-	battlegroupList := &BattlegroupList{}
+	battlegroupList := &battlegroupList{}
 	err = json.Unmarshal(jsonBlob, battlegroupList)
 	if err != nil {
 		return nil, err
@@ -298,7 +298,7 @@ func (a *ApiClient) GetBattlegroups() ([]*Battlegroup, error) {
 func (a *ApiClient) GetRaces() ([]*Race, error) {
 	jsonBlob, err := a.get("data/character/races")
 	
-	raceList := &RaceList{}
+	raceList := &raceList{}
 	err = json.Unmarshal(jsonBlob, raceList)
 	if err != nil {
 		return nil, err
@@ -309,7 +309,7 @@ func (a *ApiClient) GetRaces() ([]*Race, error) {
 func (a *ApiClient) GetClasses() ([]*Class, error) {
 	jsonBlob, err := a.get("data/character/classes")
 
-	classList := &ClassList{}
+	classList := &classList{}
 	err = json.Unmarshal(jsonBlob, classList)
 	if err != nil {
 		return nil, err

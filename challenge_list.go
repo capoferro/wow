@@ -1,5 +1,5 @@
 package wow
 
-type ChallengeSet struct {
+type challengeList struct {
 	Challenges []*Challenge `json:"challenge"`
 }
