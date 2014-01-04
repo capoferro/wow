@@ -24,3 +24,7 @@ functions used to retrieve said data.
 * Recipe
 * Spell
 * Data Resources
+
+Todo:
+
+* Signed requests for authenticated applications
