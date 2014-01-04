@@ -1,4 +1,4 @@
-# WoW Community API Client for Golang
+# World of Warcraft Community API Client for Golang
 
 Provides Golang structs and an API client for consuming WoW Community
 API data
