@@ -284,6 +284,17 @@ func (a *ApiClient) GetSpell(id int) (*Spell, error) {
 	return spell, nil
 }
 
+func (a *ApiClient) GetBattlegroups() ([]*Battlegroup, error) {
+	jsonBlob, err := a.get("data/battlegroups/")
+
+	battlegroupList := &BattlegroupList{}
+	err = json.Unmarshal(jsonBlob, battlegroupList)
+	if err != nil {
+		return nil, err
+	}
+	return battlegroupList.Battlegroups, nil	
+}
+
 func validateGuildFields(fields []string) error {
 	validFields := []string{
 		"members",

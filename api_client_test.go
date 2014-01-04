@@ -237,3 +237,13 @@ func (s *ApiClientSuite) Test_GetSpell(c *C) {
 	c.Assert(a.CastTime, Equals, "Instant")
 	c.Assert(a.Cooldown, Equals, "6 sec cooldown")
 }
+
+func (s *ApiClientSuite) Test_GetBattlegroups(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, err := client.GetBattlegroups()
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(len(a) > 0, Equals, true)
+}
