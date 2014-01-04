@@ -5,4 +5,5 @@ type Glyph struct {
 	Item int
 	Name string
 	Icon string
+	TypeId int
 }

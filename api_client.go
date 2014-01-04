@@ -372,6 +372,17 @@ func (a *ApiClient) GetItemClasses() ([]*ItemClass, error) {
 	return itemClassList.Classes, nil
 }
 
+func (a *ApiClient) GetTalents() (*ClassTalentList, error) {
+	jsonBlob, err := a.get("data/talents")
+
+	talents := &ClassTalentList{}
+	err = json.Unmarshal(jsonBlob, talents)
+	if err != nil {
+		return nil, err
+	}
+	return talents, nil
+}
+
 func validateGuildFields(fields []string) error {
 	validFields := []string{
 		"members",

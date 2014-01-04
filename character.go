@@ -20,7 +20,7 @@ type Character struct {
 	Reputation []*Reputation
 	Titles []*Title
 	Achievements *AchievementList
-	Talents []*TalentList
+	Talents []*CharacterTalentList
 	Appearance *CharacterAppearance
 	Mounts *MountList
 	Pets *PetList
