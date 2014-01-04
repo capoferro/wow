@@ -267,3 +267,13 @@ func (s *ApiClientSuite) Test_GetClasss(c *C) {
 	}
 	c.Assert(len(a) > 0, Equals, true)
 }
+
+func (s *ApiClientSuite) Test_GetAchievements(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, err := client.GetAchievements()
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(len(a) > 0, Equals, true)	
+}

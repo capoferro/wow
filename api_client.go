@@ -317,6 +317,17 @@ func (a *ApiClient) GetClasses() ([]*Class, error) {
 	return classList.Classes, nil
 }
 
+func (a *ApiClient) GetAchievements() ([]*Achievement, error) {
+	jsonBlob, err := a.get("data/character/achievements")
+
+	achievementList := &achievementData{}
+	err = json.Unmarshal(jsonBlob, achievementList)
+	if err != nil {
+		return nil, err
+	}
+	return achievementList.Achievements, nil
+}
+
 func validateGuildFields(fields []string) error {
 	validFields := []string{
 		"members",
