@@ -229,6 +229,17 @@ func (a *ApiClient) GetGuildWithFields(realm string, guildName string, fields []
 	return guild, nil
 }
 
+func (a *ApiClient) GetPvPLeaderboard(bracket string) (*PvPLeaderboard, error) {
+	jsonBlob, err := a.get(fmt.Sprintf("leaderboard/%s", bracket))
+
+	leaderboard := &PvPLeaderboard{}
+	err = json.Unmarshal(jsonBlob, leaderboard)
+	if err != nil {
+		return nil, err
+	}
+	return leaderboard, nil
+}
+
 func validateGuildFields(fields []string) error {
 	validFields := []string{
 		"members",

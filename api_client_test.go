@@ -185,3 +185,12 @@ func (s *ApiClientSuite) Test_GetGuild(c *C) {
 	c.Assert(a.Achievements != nil, Equals, true)
 }
 
+func (s *ApiClientSuite) Test_GetPvPLeaderboard(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, err := client.GetPvPLeaderboard("3v3")
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(len(a.Rows) > 0, Equals, true)
+}
