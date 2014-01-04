@@ -226,3 +226,14 @@ func (s *ApiClientSuite) Test_GetRecipe(c *C) {
 	c.Assert(a.Name, Equals, "Enchant Gloves - Precise Strikes")
 	c.Assert(a.Profession, Equals, "Enchanting")
 }
+
+func (s *ApiClientSuite) Test_GetSpell(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, err := client.GetSpell(8056)
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(a.CastTime, Equals, "Instant")
+	c.Assert(a.Cooldown, Equals, "6 sec cooldown")
+}

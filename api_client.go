@@ -273,6 +273,17 @@ func (a *ApiClient) GetRecipe(id int) (*Recipe, error) {
 	return recipe, nil
 }
 
+func (a *ApiClient) GetSpell(id int) (*Spell, error) {
+	jsonBlob, err := a.get(fmt.Sprintf("spell/%d", id))
+
+	spell := &Spell{}
+	err = json.Unmarshal(jsonBlob, spell)
+	if err != nil {
+		return nil, err
+	}
+	return spell, nil
+}
+
 func validateGuildFields(fields []string) error {
 	validFields := []string{
 		"members",

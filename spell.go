@@ -7,4 +7,6 @@ type Spell struct {
 	Description string
 	CastTime string
 	Cooldown string
+	Range string
+	PowerCost string
 }
