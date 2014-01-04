@@ -240,6 +240,17 @@ func (a *ApiClient) GetPvPLeaderboard(bracket string) (*PvPLeaderboard, error) {
 	return leaderboard, nil
 }
 
+func (a *ApiClient) GetQuest(id int) (*Quest, error) {
+	jsonBlob, err := a.get(fmt.Sprintf("quest/%d", id))
+
+	quest := &Quest{}
+	err = json.Unmarshal(jsonBlob, quest)
+	if err != nil {
+		return nil, err
+	}
+	return quest, nil
+}
+
 func validateGuildFields(fields []string) error {
 	validFields := []string{
 		"members",

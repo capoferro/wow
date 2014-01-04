@@ -194,3 +194,15 @@ func (s *ApiClientSuite) Test_GetPvPLeaderboard(c *C) {
 	}
 	c.Assert(len(a.Rows) > 0, Equals, true)
 }
+
+func (s *ApiClientSuite) Test_GetQuest(c *C) {
+
+	client, _ := NewApiClient("US", "")
+
+	a, err := client.GetQuest(13146)
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(a.Level, Equals, 80)
+	c.Assert(a.SuggestedPartyMembers, Equals, 0)
+}
