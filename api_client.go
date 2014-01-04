@@ -328,6 +328,17 @@ func (a *ApiClient) GetAchievements() ([]*Achievement, error) {
 	return achievementList.Achievements, nil
 }
 
+func (a *ApiClient) GetGuildRewards() ([]*GuildReward, error) {
+	jsonBlob, err := a.get("data/guild/rewards")
+
+	guildRewardList := &guildRewardList{}
+	err = json.Unmarshal(jsonBlob, guildRewardList)
+	if err != nil {
+		return nil, err
+	}
+	return guildRewardList.Rewards, nil
+}
+
 func validateGuildFields(fields []string) error {
 	validFields := []string{
 		"members",
