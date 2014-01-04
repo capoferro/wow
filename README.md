@@ -11,11 +11,11 @@ See [the official documentation](http://blizzard.github.io/api-wow-docs/) for an
 * BattlePet
 * Challenge Mode
 * Character Profile
+* Item
+* Guild Profile
 
 Todo:
 
-* Item
-* Guild Profile
 * PvP
 * Quest
 * Realm Status
