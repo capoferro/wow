@@ -295,6 +295,17 @@ func (a *ApiClient) GetBattlegroups() ([]*Battlegroup, error) {
 	return battlegroupList.Battlegroups, nil	
 }
 
+func (a *ApiClient) GetRaces() ([]*Race, error) {
+	jsonBlob, err := a.get("data/character/races")
+	
+	raceList := &RaceList{}
+	err = json.Unmarshal(jsonBlob, raceList)
+	if err != nil {
+		return nil, err
+	}
+	return raceList.Races, nil
+}
+
 func validateGuildFields(fields []string) error {
 	validFields := []string{
 		"members",

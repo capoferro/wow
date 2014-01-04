@@ -247,3 +247,13 @@ func (s *ApiClientSuite) Test_GetBattlegroups(c *C) {
 	}
 	c.Assert(len(a) > 0, Equals, true)
 }
+
+func (s *ApiClientSuite) Test_GetRaces(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, err := client.GetRaces()
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(len(a) > 0, Equals, true)
+}
