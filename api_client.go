@@ -339,6 +339,19 @@ func (a *ApiClient) GetGuildRewards() ([]*GuildReward, error) {
 	return guildRewardList.Rewards, nil
 }
 
+func (a *ApiClient) GetGuildPerks() ([]*GuildPerk, error) {
+	jsonBlob, err := a.get("data/guild/perks")
+
+	guildPerkList := &guildPerkList{}
+	err = json.Unmarshal(jsonBlob, guildPerkList)
+	if err != nil {
+		return nil, err
+	}
+	return guildPerkList.Perks, nil
+}
+
+
+
 func validateGuildFields(fields []string) error {
 	validFields := []string{
 		"members",

@@ -287,3 +287,13 @@ func (s *ApiClientSuite) Test_GetGuildRewards(c *C) {
 	}
 	c.Assert(len(a) > 0, Equals, true)	
 }
+
+func (s *ApiClientSuite) Test_GetGuildPerks(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, err := client.GetGuildPerks()
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(len(a) > 0, Equals, true)	
+}
