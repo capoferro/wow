@@ -13,12 +13,12 @@ See [the official documentation](http://blizzard.github.io/api-wow-docs/) for an
 * Character Profile
 * Item
 * Guild Profile
-
-Todo:
-
 * PvP
 * Quest
 * Realm Status
 * Recipe
 * Spell
-* Data Resources
+
+Todo:
+
+* Data Resources (50% complete)
