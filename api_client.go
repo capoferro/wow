@@ -229,7 +229,7 @@ func (a *ApiClient) GetGuildWithFields(realm string, guildName string, fields []
 	return guild, nil
 }
 
-func (a *ApiClient) GetPvPLeaderboard(bracket string) (*PvPLeaderboard, error) {
+func (a *ApiClient) GetPvPLeaderboard(bracket string) ([]*PvPLeaderboardRow, error) {
 	jsonBlob, err := a.get(fmt.Sprintf("leaderboard/%s", bracket))
 
 	leaderboard := &PvPLeaderboard{}
@@ -237,7 +237,7 @@ func (a *ApiClient) GetPvPLeaderboard(bracket string) (*PvPLeaderboard, error) {
 	if err != nil {
 		return nil, err
 	}
-	return leaderboard, nil
+	return leaderboard.Rows, nil
 }
 
 func (a *ApiClient) GetQuest(id int) (*Quest, error) {
@@ -249,6 +249,17 @@ func (a *ApiClient) GetQuest(id int) (*Quest, error) {
 		return nil, err
 	}
 	return quest, nil
+}
+
+func (a *ApiClient) GetRealmStatus() ([]*RealmStatus, error) {
+	jsonBlob, err := a.get("realm/status")
+
+	list := &RealmStatusList{}
+	err = json.Unmarshal(jsonBlob, list)
+	if err != nil {
+		return nil, err
+	}
+	return list.Realms, nil
 }
 
 func validateGuildFields(fields []string) error {

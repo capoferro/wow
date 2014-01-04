@@ -192,11 +192,10 @@ func (s *ApiClientSuite) Test_GetPvPLeaderboard(c *C) {
 	if err != nil {
 		println(err.Error())
 	}
-	c.Assert(len(a.Rows) > 0, Equals, true)
+	c.Assert(len(a) > 0, Equals, true)
 }
 
 func (s *ApiClientSuite) Test_GetQuest(c *C) {
-
 	client, _ := NewApiClient("US", "")
 
 	a, err := client.GetQuest(13146)
@@ -205,4 +204,14 @@ func (s *ApiClientSuite) Test_GetQuest(c *C) {
 	}
 	c.Assert(a.Level, Equals, 80)
 	c.Assert(a.SuggestedPartyMembers, Equals, 0)
+}
+
+func (s *ApiClientSuite) Test_GetRealmStatus(c *C) {
+		client, _ := NewApiClient("US", "")
+
+	a, err := client.GetRealmStatus()
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(len(a) > 0, Equals, true)
 }
