@@ -5,12 +5,11 @@ import (
 )
 
 type ChallengeGroup struct {
-	Date *time.Time
-	Faction string
+	Date        *time.Time
+	Faction     string
 	IsRecurring bool
-	Medal string
-	Members []*ChallengeMember
-	Ranking int
-	Time *ChallengeTime
+	Medal       string
+	Members     []*ChallengeMember
+	Ranking     int
+	Time        *ChallengeTime
 }
-

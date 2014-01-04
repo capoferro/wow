@@ -1,9 +1,9 @@
 package wow
 
 type Raid struct {
-	Name string
+	Name   string
 	Normal int
 	Heroic int
-	Id int
+	Id     int
 	Bosses []*RaidBoss
 }

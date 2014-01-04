@@ -1,14 +1,15 @@
 package wow
 
 import (
+	. "launchpad.net/gocheck"
 	"testing"
-    . "launchpad.net/gocheck"
 )
 
 // GoCheck boilerplate
 func Test(t *testing.T) { TestingT(t) }
 
 type ApiClientSuite struct{}
+
 var _ = Suite(&ApiClientSuite{})
 
 func (s *ApiClientSuite) Test_NewApiClient_default(c *C) {
@@ -37,7 +38,7 @@ func (s *ApiClientSuite) Test_GetAchievement(c *C) {
 	client, _ := NewApiClient("US", "")
 	a, _ := client.GetAchievement(2144)
 
-  c.Assert(a.AccountWide, Equals, true)
+	c.Assert(a.AccountWide, Equals, true)
 	c.Assert(a.Description, Equals, "Complete the world events achievements listed below.")
 	c.Assert(len(a.Criteria), Equals, 9)
 	c.Assert(len(a.RewardItems), Equals, 1)
@@ -79,8 +80,8 @@ func (s *ApiClientSuite) Test_GetBattlePetSpecies(c *C) {
 func (s *ApiClientSuite) Test_GetBattlePetStats(c *C) {
 	client, _ := NewApiClient("US", "")
 	a, _ := client.GetBattlePet(258, 25, 5, 4)
-	
-  c.Assert(a.BreedId, Equals, 5)
+
+	c.Assert(a.BreedId, Equals, 5)
 	c.Assert(a.Health, Equals, 1587)
 	c.Assert(a.Level, Equals, 25)
 	c.Assert(a.PetQualityId, Equals, 4)
@@ -127,8 +128,8 @@ func (s *ApiClientSuite) Test_GetCharacter(c *C) {
 func (s *ApiClientSuite) Test_GetCharacterWithFields(c *C) {
 	client, _ := NewApiClient("US", "")
 	a, _ := client.GetCharacterWithFields(
-		"Runetotem", 
-		"Capoferro", 
+		"Runetotem",
+		"Capoferro",
 		[]string{
 			"achievements",
 			"appearance",
@@ -176,7 +177,7 @@ func (s *ApiClientSuite) Test_GetItemSet(c *C) {
 func (s *ApiClientSuite) Test_GetGuild(c *C) {
 	client, _ := NewApiClient("US", "")
 
-	a, _ := client.GetGuildWithFields("Runetotem", "Reforged", []string{"achievements","news","challenge","members"})
+	a, _ := client.GetGuildWithFields("Runetotem", "Reforged", []string{"achievements", "news", "challenge", "members"})
 	c.Assert(a.Name, Equals, "Reforged")
 	c.Assert(a.Level, Equals, 25)
 	c.Assert(len(a.News) > 0, Equals, true)
@@ -275,7 +276,7 @@ func (s *ApiClientSuite) Test_GetAchievements(c *C) {
 	if err != nil {
 		println(err.Error())
 	}
-	c.Assert(len(a) > 0, Equals, true)	
+	c.Assert(len(a) > 0, Equals, true)
 }
 
 func (s *ApiClientSuite) Test_GetGuildRewards(c *C) {
@@ -285,7 +286,7 @@ func (s *ApiClientSuite) Test_GetGuildRewards(c *C) {
 	if err != nil {
 		println(err.Error())
 	}
-	c.Assert(len(a) > 0, Equals, true)	
+	c.Assert(len(a) > 0, Equals, true)
 }
 
 func (s *ApiClientSuite) Test_GetGuildPerks(c *C) {
@@ -295,7 +296,7 @@ func (s *ApiClientSuite) Test_GetGuildPerks(c *C) {
 	if err != nil {
 		println(err.Error())
 	}
-	c.Assert(len(a) > 0, Equals, true)	
+	c.Assert(len(a) > 0, Equals, true)
 }
 
 func (s *ApiClientSuite) Test_GetGuildAchievements(c *C) {
@@ -305,7 +306,7 @@ func (s *ApiClientSuite) Test_GetGuildAchievements(c *C) {
 	if err != nil {
 		println(err.Error())
 	}
-	c.Assert(len(a) > 0, Equals, true)	
+	c.Assert(len(a) > 0, Equals, true)
 }
 
 func (s *ApiClientSuite) Test_GetItemClasses(c *C) {
@@ -315,7 +316,7 @@ func (s *ApiClientSuite) Test_GetItemClasses(c *C) {
 	if err != nil {
 		println(err.Error())
 	}
-	c.Assert(len(a) > 0, Equals, true)	
+	c.Assert(len(a) > 0, Equals, true)
 	c.Assert(len(a[0].Subclasses) > 0, Equals, true)
 }
 
@@ -339,5 +340,5 @@ func (s *ApiClientSuite) Test_GetPetTypes(c *C) {
 	if err != nil {
 		println(err.Error())
 	}
-	c.Assert(len(a) > 0, Equals, true)	
+	c.Assert(len(a) > 0, Equals, true)
 }

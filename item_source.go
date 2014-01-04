@@ -1,6 +1,6 @@
 package wow
 
 type ItemSource struct {
-	SourceId int
+	SourceId   int
 	SourceType string
 }

@@ -1,7 +1,7 @@
 package wow
 
 type MountList struct {
-	NumCollected int
+	NumCollected    int
 	NumNotCollected int
-	Collected []*Mount
+	Collected       []*Mount
 }

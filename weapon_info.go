@@ -1,7 +1,7 @@
 package wow
 
 type WeaponInfo struct {
-	Damage *WeaponDamage
+	Damage      *WeaponDamage
 	WeaponSpeed float32
-	DPS float32
+	DPS         float32
 }

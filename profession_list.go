@@ -1,6 +1,6 @@
 package wow
 
 type ProfessionList struct {
-	Primary []*Profession
+	Primary   []*Profession
 	Secondary []*Profession
 }

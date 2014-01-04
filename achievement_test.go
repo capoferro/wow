@@ -1,10 +1,11 @@
 package wow
 
 import (
-    . "launchpad.net/gocheck"
+	. "launchpad.net/gocheck"
 )
 
 type AchievementSuite struct{}
+
 var _ = Suite(&AchievementSuite{})
 
 func (s *AchievementSuite) Test_IsGroup(c *C) {

@@ -1,6 +1,6 @@
 package wow
 
 type Title struct {
-	Id int
+	Id   int
 	Name string
 }

@@ -1,7 +1,7 @@
 package wow
 
 type Talent struct {
-	Tier int
+	Tier   int
 	Column int
-	Spell *Spell
+	Spell  *Spell
 }

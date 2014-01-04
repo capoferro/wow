@@ -1,7 +1,7 @@
 package wow
 
 type PetList struct {
-	NumCollected int
+	NumCollected    int
 	NumNotCollected int
-	Collected []*Pet
+	Collected       []*Pet
 }

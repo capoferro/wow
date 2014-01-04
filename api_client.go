@@ -1,24 +1,24 @@
 package wow
 
 import (
-	"fmt"
-	"strings"
-	"errors"
-	"net/http"
-	"net/url"
-	"time"
-	"encoding/base64"
 	"crypto/hmac"
 	"crypto/sha1"
+	"encoding/base64"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io/ioutil"
+	"net/http"
+	"net/url"
 	"strconv"
+	"strings"
+	"time"
 )
 
 type ApiClient struct {
-	Host string
-	Locale string
-	Secret string
+	Host      string
+	Locale    string
+	Secret    string
 	PublicKey string
 }
 
@@ -58,7 +58,7 @@ func NewApiClient(region string, locale string) (*ApiClient, error) {
 			}
 		}
 	}
-		
+
 	return nil, errors.New(fmt.Sprintf("Locale '%s' is not valid for region '%s'", locale, region))
 }
 
@@ -116,10 +116,10 @@ func (a *ApiClient) GetBattlePetSpecies(id int) (*BattlePetSpecies, error) {
 
 func (a *ApiClient) GetBattlePet(id int, level int, breedId int, qualityId int) (*BattlePet, error) {
 	jsonBlob, err := a.getWithParams(
-		fmt.Sprintf("battlePet/stats/%d", id), 
+		fmt.Sprintf("battlePet/stats/%d", id),
 		map[string]string{
-			"level": strconv.Itoa(level),
-			"breedId": strconv.Itoa(breedId),
+			"level":     strconv.Itoa(level),
+			"breedId":   strconv.Itoa(breedId),
 			"qualityId": strconv.Itoa(qualityId),
 		})
 	if err != nil {
@@ -131,7 +131,7 @@ func (a *ApiClient) GetBattlePet(id int, level int, breedId int, qualityId int) 
 	if err != nil {
 		return nil, err
 	}
-	return pet, nil	
+	return pet, nil
 }
 
 func (a *ApiClient) GetBattlePetStats(id int, level int, breedId int, qualityId int) (*BattlePet, error) {
@@ -178,7 +178,7 @@ func (a *ApiClient) GetCharacterWithFields(realm string, characterName string, f
 	if err != nil {
 		return nil, err
 	}
-	return char, nil	
+	return char, nil
 }
 
 func (a *ApiClient) GetItem(id int) (*Item, error) {
@@ -190,7 +190,7 @@ func (a *ApiClient) GetItem(id int) (*Item, error) {
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return item, err
 }
 
@@ -204,7 +204,7 @@ func (a *ApiClient) GetItemSet(id int) (*ItemSet, error) {
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return itemSet, err
 }
 
@@ -292,12 +292,12 @@ func (a *ApiClient) GetBattlegroups() ([]*Battlegroup, error) {
 	if err != nil {
 		return nil, err
 	}
-	return battlegroupList.Battlegroups, nil	
+	return battlegroupList.Battlegroups, nil
 }
 
 func (a *ApiClient) GetRaces() ([]*Race, error) {
 	jsonBlob, err := a.get("data/character/races")
-	
+
 	raceList := &raceList{}
 	err = json.Unmarshal(jsonBlob, raceList)
 	if err != nil {
@@ -443,7 +443,7 @@ func validateFields(validFields []string, fields []string) error {
 		return errors.New(fmt.Sprintf("The following fields are not valid: %v", badFields))
 	} else {
 		return nil
-	}	
+	}
 }
 
 func (a *ApiClient) get(path string) ([]byte, error) {
@@ -473,7 +473,7 @@ func (a *ApiClient) getWithParams(path string, queryParams map[string]string) ([
 	if err != nil {
 		return make([]byte, 0), err
 	}
-	
+
 	return body, nil
 }
 
@@ -481,12 +481,12 @@ func (a *ApiClient) url(path string, queryParamPairs map[string]string) *url.URL
 	queryParamPairs["locale"] = a.Locale
 	queryParamList := make([]string, 0)
 	for k, v := range queryParamPairs {
-		queryParamList = append(queryParamList, k + "=" + v)
+		queryParamList = append(queryParamList, k+"="+v)
 	}
 	return &url.URL{
-		Scheme: "http",
-		Host: a.Host,
-		Path: "/api/wow/" + path,
+		Scheme:   "http",
+		Host:     a.Host,
+		Path:     "/api/wow/" + path,
 		RawQuery: strings.Join(queryParamList, "&"),
 	}
 }
@@ -509,4 +509,3 @@ func (a *ApiClient) signature(verb string, path string) string {
 func handleError(err error) {
 	panic(err)
 }
-

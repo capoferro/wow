@@ -1,10 +1,10 @@
 package wow
 
 type ChallengeTime struct {
-	Time int
-	Hours int
-	Minutes int
-	Seconds int
+	Time         int
+	Hours        int
+	Minutes      int
+	Seconds      int
 	Milliseconds int
-	IsPositive bool
+	IsPositive   bool
 }

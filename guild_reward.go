@@ -1,9 +1,9 @@
 package wow
 
 type GuildReward struct {
-	MinGuildLevel int
+	MinGuildLevel    int
 	MinGuildRepLevel int
-	Races []int
-	Achievement *Achievement
-	Item *Item
+	Races            []int
+	Achievement      *Achievement
+	Item             *Item
 }

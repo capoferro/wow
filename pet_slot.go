@@ -1,9 +1,9 @@
 package wow
 
 type PetSlot struct {
-	Slot int
+	Slot          int
 	BattlePetGuid string
-	IsEmpty bool
-	IsLocked bool
-	Abilities []int
+	IsEmpty       bool
+	IsLocked      bool
+	Abilities     []int
 }

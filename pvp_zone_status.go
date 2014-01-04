@@ -1,8 +1,8 @@
 package wow
 
 type PvPZoneStatus struct {
-	Area int
+	Area               int
 	ControllingFaction int `json:"controlling-faction"`
-	Status int
-	Next uint64
+	Status             int
+	Next               uint64
 }

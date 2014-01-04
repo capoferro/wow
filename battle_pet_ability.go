@@ -1,12 +1,12 @@
 package wow
 
 type BattlePetAbility struct {
-	Cooldown int
-	Icon string
-	Id int
+	Cooldown  int
+	Icon      string
+	Id        int
 	IsPassive bool
-	Name string
+	Name      string
 	PetTypeId int
-	Rounds int
+	Rounds    int
 	ShowHints bool
 }
