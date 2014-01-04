@@ -307,3 +307,14 @@ func (s *ApiClientSuite) Test_GetGuildAchievements(c *C) {
 	}
 	c.Assert(len(a) > 0, Equals, true)	
 }
+
+func (s *ApiClientSuite) Test_GetItemClasses(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, err := client.GetItemClasses()
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(len(a) > 0, Equals, true)	
+	c.Assert(len(a[0].Subclasses) > 0, Equals, true)
+}
