@@ -306,6 +306,17 @@ func (a *ApiClient) GetRaces() ([]*Race, error) {
 	return raceList.Races, nil
 }
 
+func (a *ApiClient) GetClasses() ([]*Class, error) {
+	jsonBlob, err := a.get("data/character/classes")
+
+	classList := &ClassList{}
+	err = json.Unmarshal(jsonBlob, classList)
+	if err != nil {
+		return nil, err
+	}
+	return classList.Classes, nil
+}
+
 func validateGuildFields(fields []string) error {
 	validFields := []string{
 		"members",

@@ -257,3 +257,13 @@ func (s *ApiClientSuite) Test_GetRaces(c *C) {
 	}
 	c.Assert(len(a) > 0, Equals, true)
 }
+
+func (s *ApiClientSuite) Test_GetClasss(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, err := client.GetClasses()
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(len(a) > 0, Equals, true)
+}
