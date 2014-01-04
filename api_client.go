@@ -148,7 +148,7 @@ func (a *ApiClient) GetChallenges(realm string) ([]*Challenge, error) {
 	if err != nil {
 		return nil, err
 	}
-	challengeSet := &challengeSet{}
+	challengeSet := &ChallengeSet{}
 	err = json.Unmarshal(jsonBlob, challengeSet)
 	if err != nil {
 		return nil, err
@@ -208,29 +208,69 @@ func (a *ApiClient) GetItemSet(id int) (*ItemSet, error) {
 	return itemSet, err
 }
 
+func (a *ApiClient) GetGuild(realm string, guildName string) (*Guild, error) {
+	return a.GetGuildWithFields(realm, guildName, make([]string, 0))
+}
+
+func (a *ApiClient) GetGuildWithFields(realm string, guildName string, fields []string) (*Guild, error) {
+	err := validateGuildFields(fields)
+	if err != nil {
+		return nil, err
+	}
+	jsonBlob, err := a.getWithParams(fmt.Sprintf("guild/%s/%s", realm, url.QueryEscape(guildName)), map[string]string{"fields": strings.Join(fields, ",")})
+	if err != nil {
+		return nil, err
+	}
+	guild := &Guild{}
+	err = json.Unmarshal(jsonBlob, guild)
+	if err != nil {
+		return nil, err
+	}
+	return guild, nil
+}
+
+func validateGuildFields(fields []string) error {
+	validFields := []string{
+		"members",
+		"achievements",
+		"news",
+		"challenge"}
+	return validateFields(validFields, fields)
+}
+
 func validateCharacterFields(fields []string) error {
+	validFields := []string{
+		"achievements",
+		"appearance",
+		"feed",
+		"guild",
+		"hunterPets",
+		"items",
+		"mounts",
+		"pets",
+		"petSlots",
+		"professions",
+		"progression",
+		"pvp",
+		"quests",
+		"reputation",
+		"stats",
+		"talents",
+		"titles"}
+	return validateFields(validFields, fields)
+}
+
+func validateFields(validFields []string, fields []string) error {
 	badFields := make([]string, 0)
+	var exists bool
 	for _, field := range fields {
-		switch field {
-			case "achievements",
-			"appearance",
-			"feed",
-			"guild",
-			"hunterPets",
-			"items",
-			"mounts",
-			"pets",
-			"petSlots",
-			"professions",
-			"progression",
-			"pvp",
-			"quests",
-			"reputation",
-			"stats",
-			"talents",
-			"titles":
-			// valid, noop
-		default:
+		exists = false
+		for _, valid := range validFields {
+			if valid == field {
+				exists = true
+			}
+		}
+		if !exists {
 			badFields = append(badFields, field)
 		}
 	}
@@ -238,8 +278,7 @@ func validateCharacterFields(fields []string) error {
 		return errors.New(fmt.Sprintf("The following fields are not valid: %v", badFields))
 	} else {
 		return nil
-	}
-
+	}	
 }
 
 func (a *ApiClient) get(path string) ([]byte, error) {

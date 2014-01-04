@@ -1,6 +1,6 @@
 package wow
 
-type ChallengeMember struct {
+type GuildMember struct {
 	Character *SimpleCharacter
-	Spec *Spec
+	Rank int
 }

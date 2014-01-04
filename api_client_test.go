@@ -172,3 +172,16 @@ func (s *ApiClientSuite) Test_GetItemSet(c *C) {
 	c.Assert(len(a.Items), Equals, 5)
 	c.Assert(len(a.SetBonuses), Equals, 2)
 }
+
+func (s *ApiClientSuite) Test_GetGuild(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, _ := client.GetGuildWithFields("Runetotem", "Reforged", []string{"achievements","news","challenge","members"})
+	c.Assert(a.Name, Equals, "Reforged")
+	c.Assert(a.Level, Equals, 25)
+	c.Assert(len(a.News) > 0, Equals, true)
+	c.Assert(len(a.Members) > 0, Equals, true)
+	c.Assert(len(a.Challenge) > 0, Equals, true)
+	c.Assert(a.Achievements != nil, Equals, true)
+}
+

@@ -2,7 +2,7 @@ package wow
 
 // WoW API does not provide the same data for a character when in a
 // challenge object
-type ChallengeCharacter struct {
+type SimpleCharacter struct {
 	Name string
 	Realm string
 	Battlegroup string

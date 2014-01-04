@@ -12,7 +12,7 @@ type Character struct {
 	Realm string
 	Thumbnail string
 	LastModified uint
-	Guild *Guild
+	Guild *SimpleGuild
 	Feed []*FeedEntry
 	Items *ItemList
 	Stats *CharacterStats
