@@ -207,11 +207,22 @@ func (s *ApiClientSuite) Test_GetQuest(c *C) {
 }
 
 func (s *ApiClientSuite) Test_GetRealmStatus(c *C) {
-		client, _ := NewApiClient("US", "")
+	client, _ := NewApiClient("US", "")
 
 	a, err := client.GetRealmStatus()
 	if err != nil {
 		println(err.Error())
 	}
 	c.Assert(len(a) > 0, Equals, true)
+}
+
+func (s *ApiClientSuite) Test_GetRecipe(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, err := client.GetRecipe(33994)
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(a.Name, Equals, "Enchant Gloves - Precise Strikes")
+	c.Assert(a.Profession, Equals, "Enchanting")
 }

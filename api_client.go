@@ -262,6 +262,17 @@ func (a *ApiClient) GetRealmStatus() ([]*RealmStatus, error) {
 	return list.Realms, nil
 }
 
+func (a *ApiClient) GetRecipe(id int) (*Recipe, error) {
+	jsonBlob, err := a.get(fmt.Sprintf("recipe/%d", id))
+
+	recipe := &Recipe{}
+	err = json.Unmarshal(jsonBlob, recipe)
+	if err != nil {
+		return nil, err
+	}
+	return recipe, nil
+}
+
 func validateGuildFields(fields []string) error {
 	validFields := []string{
 		"members",
