@@ -383,6 +383,17 @@ func (a *ApiClient) GetTalents() (*ClassTalentList, error) {
 	return talents, nil
 }
 
+func (a *ApiClient) GetPetTypes() ([]*PetType, error) {
+	jsonBlob, err := a.get("data/pet/types")
+
+	petTypes := &petTypeList{}
+	err = json.Unmarshal(jsonBlob, petTypes)
+	if err != nil {
+		return nil, err
+	}
+	return petTypes.PetTypes, nil
+}
+
 func validateGuildFields(fields []string) error {
 	validFields := []string{
 		"members",

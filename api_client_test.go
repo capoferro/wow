@@ -331,3 +331,13 @@ func (s *ApiClientSuite) Test_GetTalents(c *C) {
 	c.Assert(len(a.Warrior.Glyphs) > 0, Equals, true)
 	c.Assert(a.Warrior.Talents[0][0], Not(IsNil))
 }
+
+func (s *ApiClientSuite) Test_GetPetTypes(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, err := client.GetPetTypes()
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(len(a) > 0, Equals, true)	
+}
