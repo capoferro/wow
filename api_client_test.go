@@ -126,7 +126,7 @@ func (s *ApiClientSuite) Test_GetCharacter(c *C) {
 	client, _ := NewApiClient("US", "")
 	a, _ := client.GetCharacter("Runetotem", "Capoferro")
 	c.Assert(a.Race, Equals, 2)
-	c.Assert(a.Class, Equals, 6)
+	c.Assert(a.ClassId, Equals, 6)
 	c.Assert(a.Gender, Equals, 0)
 }
 
@@ -154,10 +154,11 @@ func (s *ApiClientSuite) Test_GetCharacterWithFields(c *C) {
 			"talents",
 			"titles",
 		})
-	c.Assert(a.Class, Equals, 6)
+	c.Assert(a.ClassId, Equals, 6)
 	c.Assert(a.Race, Equals, 2)
 	c.Assert(a.Gender, Equals, 0)
 	c.Assert(len(a.Items.Head.Stats), Equals, 5)
+	c.Assert(a.ApiClient, Equals, client)
 }
 
 func (s *ApiClientSuite) Test_GetItem(c *C) {
@@ -347,3 +348,4 @@ func (s *ApiClientSuite) Test_GetPetTypes(c *C) {
 	}
 	c.Assert(len(a) > 0, Equals, true)
 }
+

@@ -174,7 +174,7 @@ func (a *ApiClient) GetCharacterWithFields(realm string, characterName string, f
 	if err != nil {
 		return nil, err
 	}
-	char := &Character{}
+	char := NewCharacter(a)
 	err = json.Unmarshal(jsonBlob, char)
 	if err != nil {
 		return nil, err
