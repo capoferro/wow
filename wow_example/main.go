@@ -2,7 +2,7 @@ package main
 
 import (
   "fmt"
-  "wow"
+  "github.com/bluepojo/wow"
 )
 
 func main() {
