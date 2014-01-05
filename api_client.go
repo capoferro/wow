@@ -170,6 +170,7 @@ func (a *ApiClient) GetCharacterWithFields(realm string, characterName string, f
 		return nil, err
 	}
 	jsonBlob, err := a.getWithParams(fmt.Sprintf("character/%s/%s", realm, characterName), map[string]string{"fields": strings.Join(fields, ",")})
+
 	if err != nil {
 		return nil, err
 	}
@@ -451,16 +452,24 @@ func (a *ApiClient) get(path string) ([]byte, error) {
 }
 
 func (a *ApiClient) getWithParams(path string, queryParams map[string]string) ([]byte, error) {
-	url := a.url(path, queryParams)
 	client := &http.Client{}
-
-	request, err := http.NewRequest("GET", url.String(), nil)
-	if err != nil {
-		return make([]byte, 0), err
-	}
+	var url *url.URL
+	var request *http.Request
+	var err error
 
 	if len(a.Secret) > 0 {
+		url = a.url(path, queryParams, true)
+		request, err = http.NewRequest("GET", url.String(), nil)
+		if err != nil {
+			return make([]byte, 0), err
+		}
 		request.Header.Add("Authorization", a.authorizationString(a.signature("GET", path)))
+	} else {
+		url = a.url(path, queryParams, false)
+		request, err = http.NewRequest("GET", url.String(), nil)
+		if err != nil {
+			return make([]byte, 0), err
+		}
 	}
 
 	response, err := client.Do(request)
@@ -477,14 +486,20 @@ func (a *ApiClient) getWithParams(path string, queryParams map[string]string) ([
 	return body, nil
 }
 
-func (a *ApiClient) url(path string, queryParamPairs map[string]string) *url.URL {
+func (a *ApiClient) url(path string, queryParamPairs map[string]string, ssl bool) *url.URL {
 	queryParamPairs["locale"] = a.Locale
 	queryParamList := make([]string, 0)
 	for k, v := range queryParamPairs {
 		queryParamList = append(queryParamList, k+"="+v)
 	}
+	var scheme string
+	if ssl {
+		scheme = "https"
+	} else {
+		scheme = "http"
+	}
 	return &url.URL{
-		Scheme:   "http",
+		Scheme:   scheme,
 		Host:     a.Host,
 		Path:     "/api/wow/" + path,
 		RawQuery: strings.Join(queryParamList, "&"),
@@ -496,14 +511,14 @@ func (a *ApiClient) authorizationString(signature string) string {
 }
 
 func (a *ApiClient) signature(verb string, path string) string {
-	url := a.url(path, make(map[string]string))
+	url := a.url(path, make(map[string]string), true)
 	toBeSigned := []byte(strings.Join([]string{verb, time.Now().String(), url.Path, ""}, "\n"))
 	mac := hmac.New(sha1.New, []byte(a.Secret))
-	_, err := mac.Write(toBeSigned) // FIXME _ = signed
+	_, err := mac.Write(toBeSigned)
 	if err != nil {
 		handleError(err)
 	}
-	return base64.StdEncoding.EncodeToString([]byte("hi")) //FIXME Figure out crypto
+	return base64.StdEncoding.EncodeToString(mac.Sum(nil))
 }
 
 func handleError(err error) {

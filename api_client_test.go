@@ -12,6 +12,11 @@ type ApiClientSuite struct{}
 
 var _ = Suite(&ApiClientSuite{})
 
+func (s *ApiClientSuite) Test_signature(c *C) {
+	client, _ := NewApiClient("US", "")
+	c.Assert(client.signature("GET", "a/b/c"), Not(Equals), "")
+}
+
 func (s *ApiClientSuite) Test_NewApiClient_default(c *C) {
 	client, _ := NewApiClient("US", "")
 	c.Assert(client.Host, Equals, "us.battle.net")
