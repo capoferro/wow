@@ -171,6 +171,18 @@ func (s *ApiClientSuite) Test_GetItem(c *C) {
 	c.Assert(len(a.Stats), Equals, 4)
 }
 
+func (s *ApiClientSuite) Test_GetItem2(c *C) {
+	client, _ := NewApiClient("US", "")
+
+	a, err := client.GetItem(104426)
+	if err != nil {
+		println(err.Error())
+	}
+	c.Assert(a.Armor, Equals, 0)
+	c.Assert(a.BaseArmor, Equals, 0)
+	c.Assert(len(a.Stats), Equals, 0)
+}
+
 func (s *ApiClientSuite) Test_GetItemSet(c *C) {
 	client, _ := NewApiClient("US", "")
 

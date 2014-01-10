@@ -29,7 +29,7 @@ type Item struct {
 	ItemClass              int
 	ItemLevel              int
 	ItemSource             *ItemSource
-	ItemSpells             []*int
+	ItemSpells             []*Spell
 	ItemSubclass           int
 	MaxCount               int
 	MaxDurability          int

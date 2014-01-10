@@ -14,3 +14,13 @@ type Guild struct {
 	News              []*GuildNewsItem
 	Challenge         []*Challenge
 }
+
+func (g *Guild) ItemNews() []*GuildNewsItem{
+	itemNews := make([]*GuildNewsItem, 0)
+	for _, n := range g.News {
+		if n.Type == "itemLoot" {
+			itemNews = append(itemNews, n)
+		}
+	}
+	return itemNews
+}

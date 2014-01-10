@@ -22,6 +22,12 @@ type ApiClient struct {
 	PublicKey string
 }
 
+var apiClient *ApiClient = nil
+
+func CurrentApiClient() *ApiClient {
+	return apiClient
+}
+
 // NewApiClient accepts a region (US, EU, KR, TW, ZH) and an optional
 // associated locale to return a new instance of ApiClient. If the
 // locale is an empty string, the default locale for that region will
@@ -48,15 +54,20 @@ func NewApiClient(region string, locale string) (*ApiClient, error) {
 	default:
 		return nil, errors.New(fmt.Sprintf("Region '%s' is not valid", region))
 	}
-
+	
+	var client *ApiClient
 	if locale == "" {
-		return &ApiClient{Host: host, Locale: validLocales[0]}, nil
+		client = &ApiClient{Host: host, Locale: validLocales[0]}
 	} else {
 		for _, valid := range validLocales {
 			if valid == locale {
-				return &ApiClient{Host: host, Locale: locale}, nil
+				client = &ApiClient{Host: host, Locale: locale}
 			}
 		}
+	}
+	if client != nil {
+		apiClient = client
+		return client, nil
 	}
 
 	return nil, errors.New(fmt.Sprintf("Locale '%s' is not valid for region '%s'", locale, region))
